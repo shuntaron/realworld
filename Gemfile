@@ -46,3 +46,8 @@ group :development do
   # gem "spring"
 end
 
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+  gem "sd_notify"
+end
