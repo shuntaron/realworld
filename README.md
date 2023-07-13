@@ -1,24 +1,20 @@
-# README
+## RealWorld のデプロイ
+RealWorld のバックエンド API を AWS 上にデプロイする
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### ステップ1
+RealWorld のバックエンドの API を AWS 上にデプロイする  
 
-Things you may want to cover:
+### 要件
+- 各エンドポイントに対してリクエストを送ると、正しいレスポンスが返ってくること
+- API サーバー (EC2 もしくは ECS) とデータベースサーバー (RDS) は別々に構築すること
+- データベースサーバーは、API サーバーからのみアクセスできるようにすること
+- 独自ドメインでアクセスできるようにすること
+- SSL 化 (HTTPS 化) すること
 
-* Ruby version
+### 手順
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#### 1. リポジトリのクローン
+```console
+$ git clone https://github.com/shuntaron/realworld.git
+$ cd realworld
+```
