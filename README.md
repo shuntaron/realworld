@@ -18,3 +18,14 @@ RealWorld のバックエンドの API を AWS 上にデプロイする
 $ git clone https://github.com/shuntaron/realworld.git
 $ cd realworld
 ```
+#### 2. master.key と .env の転送
+```console
+$ scp -i ~/.ssh/<秘密鍵>.pem config/master.key <ユーザー名>@<IPアドレス>:realworld/config
+$ scp -i ~/.ssh/<秘密鍵>.pem .env <ユーザー名>@<IPアドレス>:realworld
+```
+
+#### 3. データベースの作成
+```console
+$ rails db:create
+$ rails db:migrate
+```
