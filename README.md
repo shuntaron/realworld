@@ -29,3 +29,48 @@ $ scp -i ~/.ssh/<秘密鍵>.pem .env <ユーザー名>@<IPアドレス>:realworl
 $ rails db:create
 $ rails db:migrate
 ```
+
+#### 4. systemd の設定
+https://github.com/puma/puma/blob/v5.6.6/docs/systemd.md
+```console
+$ sudo vi /etc/systemd/system/realworld.service
+```
+
+```service
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+# Puma supports systemd's `Type=notify` and watchdog service
+# monitoring, if the [sd_notify](https://github.com/agis/ruby-sdnotify) gem is installed,
+# as of Puma 5.1 or later.
+# On earlier versions of Puma or JRuby, change this to `Type=simple` and remove
+# the `WatchdogSec` line.
+Type=notify
+
+# If your Puma process locks up, systemd's watchdog will restart it within seconds.
+WatchdogSec=10
+
+User=<ユーザー名>
+
+WorkingDirectory=/hogehoge/realworld
+
+# Helpful for debugging socket activation, etc.
+# Environment=PUMA_DEBUG=1
+Environment=RAILS_ENV=production
+Environment=RAILS_SERVE_STATIC_FILES=1
+
+ExecStart=/bin/bash -lc 'bundle exec puma -C config/puma.rb'
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```console
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable realworld
+$ sudo systemctl start realworld
+```
