@@ -74,3 +74,51 @@ $ sudo systemctl daemon-reload
 $ sudo systemctl enable realworld
 $ sudo systemctl start realworld
 ```
+
+#### 5. Nginx の設定
+```console
+$ sudo vi /etc/nginx/conf.d/realworld.conf
+```
+
+```nginx
+upstream puma {
+  server unix://<hogehoge>/realworld/tmp/sockets/puma.sock;
+}
+server {
+  listen       80;
+  server_name  <ドメイン名>;
+  root /<hogehoge>/realworld/public;
+  access_log  /var/log/nginx/access.log  main;
+  error_log /var/log/nginx/error.log;
+  sendfile            on;
+  tcp_nopush          on;
+  tcp_nodelay         on;
+  keepalive_timeout   65;
+  types_hash_max_size 2048;
+  client_max_body_size 100M;
+  include             /etc/nginx/mime.types;
+
+  location / {
+    proxy_pass http://puma;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_redirect off;
+    proxy_connect_timeout 30;
+  }
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+    root /hogehoge/realworld/public;
+  }
+
+  location ^~ /packs/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+    root /hogehoge/realworld/public;
+  }
+}
+```
