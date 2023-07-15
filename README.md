@@ -163,3 +163,11 @@ $ curl -H "Content-Type: application/json" -X PUT -d '
 ##### Delete article
 $ curl -H "Content-Type: application/json" -X DELETE https://<ドメイン名>/api/articles/did-you-train-your-dragon?
 ```
+
+### ステップ2
+インフラ構成図 (AWS のアーキテクチャ図) を作成する
+
+### 参考
+[AWS のアーキテクチャ図を描きたい ! でもどうすれば良いの ?](https://aws.amazon.com/jp/builders-flash/202204/way-to-draw-architecture/?awsf.filter-name=*all)
+
+![Diagram](Diagram.drawio.png)
