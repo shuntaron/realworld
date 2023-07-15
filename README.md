@@ -129,3 +129,37 @@ $ sudo systemctl start realworld
 $ sudo systemctl status realworld
 $ sudo systemctl stop realworld
 ```
+
+#### 7. リクエストの送信
+##### Create article
+```console
+$ curl -H "Content-Type: application/json" -X POST -d '
+{
+  "title": "How to train your dragon",
+  "description": "Ever wonder how?",
+  "body": "You have to believe"
+}
+' https://<ドメイン名>/api/articles
+```
+
+##### Get article
+```console
+$ curl -s https://<ドメイン名>/api/articles/how-to-train-your-dragon | python3 -mjson.tool
+```
+
+##### Update article
+```console
+$ curl -H "Content-Type: application/json" -X PUT -d '
+{
+  "article": {
+    "title": "Did you train your dragon?"
+  }
+}
+' https://<ドメイン名>/api/articles/how-to-train-your-dragon
+```
+
+##### Delete article
+```console
+##### Delete article
+$ curl -H "Content-Type: application/json" -X DELETE https://<ドメイン名>/api/articles/did-you-train-your-dragon?
+```
