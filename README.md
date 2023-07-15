@@ -122,3 +122,10 @@ server {
   }
 }
 ```
+
+#### 6. アプリケーション起動
+```console
+$ sudo systemctl start realworld
+$ sudo systemctl status realworld
+$ sudo systemctl stop realworld
+```
